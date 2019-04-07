@@ -97,12 +97,29 @@ class Game extends React.Component {
         'Go to game start';
       const squarePositionRow = Math.ceil((this.state.clickedSquareHistory[move - 1] + 1) / 3);
       const squarePositionCol = (this.state.clickedSquareHistory[move - 1]) % 3 + 1;
-      return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
-          {!move ? '' : `Position: row - ${squarePositionRow} col - ${squarePositionCol}`}
-        </li>
-      );
+      if (move === this.state.stepNumber) {
+        return (
+          <li
+            key={move}
+            style={{ backgroundColor: 'lightyellow' }}
+          >
+            <button
+              onClick={() => this.jumpTo(move)}
+              style={{backgroundColor: 'lightyellow'}}
+            >
+              {desc}
+            </button>
+            {!move ? '' : `Position: row - ${squarePositionRow} col - ${squarePositionCol}`}
+          </li>
+        )
+      } else {
+        return (
+          <li key={move}>
+            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+            {!move ? '' : `Position: row - ${squarePositionRow} col - ${squarePositionCol}`}
+          </li>
+        )
+      }
     });
 
     let status;
