@@ -56,6 +56,7 @@ class Game extends React.Component {
       }],
       xIsNext: true,
       stepNumber: 0,
+      clickedSquareHistory: Array(9).fill(null),
     };
   }
 
@@ -63,6 +64,7 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+    this.state.clickedSquareHistory.splice(this.state.stepNumber, 1, i);
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
@@ -73,6 +75,7 @@ class Game extends React.Component {
       }]),
       xIsNext: !this.state.xIsNext,
       stepNumber: history.length,
+      clickedSquareHistory: this.state.clickedSquareHistory,
     });
   }
 
@@ -92,9 +95,12 @@ class Game extends React.Component {
       const desc = move ?
         'Go to move #' + move :
         'Go to game start';
+      const squarePositionRow = Math.ceil((this.state.clickedSquareHistory[move - 1] + 1) / 3);
+      const squarePositionCol = (this.state.clickedSquareHistory[move - 1]) % 3 + 1;
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          {!move ? '' : `Position: row - ${squarePositionRow} col - ${squarePositionCol}`}
         </li>
       );
     });
