@@ -25,23 +25,21 @@ class Board extends React.Component {
   }
 
   render() {
+    const board = Array(3).fill(1);
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+        {board.map((row, index) => {
+          let i = index * 3;
+          return (
+            <div className="board-row">
+              {board.map((square, index) => {
+                return (
+                  this.renderSquare(i + index)
+                )
+              })}
+            </div>
+          )
+        })}
       </div>
     );
   }
@@ -105,7 +103,7 @@ class Game extends React.Component {
           >
             <button
               onClick={() => this.jumpTo(move)}
-              style={{backgroundColor: 'lightyellow'}}
+              style={{ backgroundColor: 'lightyellow' }}
             >
               {desc}
             </button>
